@@ -1,7 +1,14 @@
 from flask import Flask, render_template, request, jsonify, session, url_for, g, redirect
-from flask import Flask, render_template, request
-import json
 
+
+from flask import Flask, render_template, request
+
+import nltk
+import numpy as np
+import json
+# import random
+# from nltk.stem import WordNetLemmatizer
+# from keras.models import Sequential, load_model
 
 
 class User:
@@ -23,7 +30,7 @@ i = 0
 app = Flask(__name__)
 #
 app.secret_key = "ninjahattori"
-
+query = []
 data1 = json.load(open("static/data/query.json"))
 @app.get("/")
 def index_get():
@@ -37,23 +44,17 @@ def index_get():
 @app.route("/add_questions", methods=["POST", "GET"])
 def ask_expert():
     if request.method == "POST":
-        email = request.form["email"]
-        query = request.form["query"]
-        f = json.load(open("static/data/query.json", ))
-        main = {
-            email: {"query": query
-                    }
-        }
-        f.update(main)
-        json_object = json.dumps(f, indent=4)
-        with open("static/data/query.json", "w") as outfile:
-            outfile.write(json_object)
+        # email = request.form["email"]
+        main = request.form["query"]
+        query.append(main)
+    #
     return render_template("expert.html")
 
 
 @app.before_request
 def before_request():
     g.user = None
+
     if 'user_id' in session:
         user = [x for x in users if x.id == session['user_id']][0]
         g.user = user
@@ -66,11 +67,12 @@ def login():
         username = request.form['username']
         password = request.form['password']
         user = [x for x in users if x.username == username][0]
-
         if user and user.password == password:
             session['user_id'] = user.id
             return redirect(url_for('expert_homepage'))
+
         return redirect(url_for('login'))
+
     return render_template('login.html')
 
 
@@ -78,22 +80,14 @@ def login():
 def expert_homepage():
     if not g.user:
         return redirect(url_for('login'))
-    query = json.load(open("static/data/query.json"))
-    for i in query:
-        data1.update({i:query[i]["query"]})
-    data = data1
+    data = query
     return render_template("index.html", data=data)
 
 
-@app.route('/delete/<gmail>')
-def delete(gmail):
-    data = json.load(open("static/data/query.json", ))
-    data.pop(gmail)
-    json_object = json.dumps(data, indent=4)
-    with open("static/data/query.json", "w") as outfile:
-        outfile.write(json_object)
-    data1.pop(gmail)
-    return redirect("/expert_homepage")
+@app.route('/delete/<ques>')
+def delete(ques):
+    query.remove(ques)
+    return redirect(url_for('expert_homepage'))
 
 
 if __name__ == "__main__":
