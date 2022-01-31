@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add question</title>
+    <title>Ask the expert</title>
 </head>
 <body style="background-color:white">
 <div class="imgclass">
@@ -13,6 +13,7 @@
 </div>
 <div class="headfloat">
     <h1>Acrom</h1>
+    <h3>The AI Chatbot</h3>
 </div>
 <br><br><br>
 <p style="text-align: center;font-size:50px;background: linear-gradient(
@@ -28,12 +29,24 @@
          #237ccf, #00c3ff);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;font-family:'Jetbrains Momo'">
-    
+    Acrom is an AI bot which helps you to solve AI queries on the spot. It's a chatbot which is still under some work. But
+    to solve AI related questions, it needs data. The creators worked a lot to create a lot of data, but we don't know what else
+    can we add, so here we want your help. Given below is a form where you can suggest us some AI related questions which we
+    can add to our dataset.
 </p>
 <br><br>
 <div class="box">
     <form method="POST">
-        
+        <label for="email">
+            <p style="font-size:20px;background: linear-gradient(
+                to right, #6b21f3, #085eff,
+                 #237ccf, #00c3ff);
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;">
+                EMAIL ID
+        </p>
+            </label>
+      <input type="email" id="email" name="email" required>
       <label for="query"> <p style="font-size:20px;background: linear-gradient(
         to right, #6b21f3, #085eff,
          #237ccf, #00c3ff);
