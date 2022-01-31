@@ -3,8 +3,7 @@ from flask import Flask, render_template, request, jsonify, session, url_for, g,
 
 from flask import Flask, render_template, request
 
-import nltk
-import numpy as np
+
 import json
 # import random
 # from nltk.stem import WordNetLemmatizer
